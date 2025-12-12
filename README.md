@@ -10,7 +10,7 @@ This project contains a fullstack Todo application with a React frontend, NestJS
 
 1. **Clone the repository**
    ```sh
-   git clone <your-repo-url>
+   git clone https://github.com/Swarnaka-Deepashan/todo-app-assessment.git
    cd todo-fe
    ```
 
