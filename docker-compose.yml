@@ -1,0 +1,119 @@
+version: "3.9"
+ 
+services:
+
+  # -------------------------------------
+
+  # MySQL Database
+
+  # -------------------------------------
+
+  db:
+
+    image: mysql:8
+
+    container_name: mysql-db
+
+    restart: always
+
+    environment:
+
+      MYSQL_ROOT_PASSWORD: root
+
+      MYSQL_DATABASE: app_db
+
+      MYSQL_USER: app_user
+
+      MYSQL_PASSWORD: app_pass
+
+    ports:
+
+      - "3306:3306"
+
+    volumes:
+
+      - db_data:/var/lib/mysql
+
+    networks:
+
+      - app-network
+ 
+  # -------------------------------------
+
+  # NestJS Backend API
+
+  # -------------------------------------
+
+  api:
+
+    build: ./todo-backend      # <--- path to your NestJS project folder
+
+    container_name: nest-api
+
+    restart: always
+
+    depends_on:
+
+      - db
+
+    environment:
+
+      DB_HOST: db
+
+      DB_PORT: 3306
+
+      DB_USER: app_user
+
+      DB_PASS: app_pass
+
+      DB_NAME: app_db
+
+    ports:
+
+      - "3000:3000"
+
+    networks:
+
+      - app-network
+ 
+  # -------------------------------------
+
+  # React UI
+
+  # -------------------------------------
+
+  ui:
+
+    build: ./todo-web           # <--- path to your React project folder
+
+    container_name: react-ui
+
+    restart: always
+
+    depends_on:
+
+      - api
+
+    ports:
+
+      - "80:80"           # run React build on port 80
+
+    networks:
+
+      - app-network
+ 
+# -------------------------------------
+
+# Shared Network & Volumes
+
+# -------------------------------------
+
+networks:
+
+  app-network:
+ 
+volumes:
+
+  db_data:
+
+ 

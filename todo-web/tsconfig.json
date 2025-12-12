@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "types": ["node", "jest","@testing-library/jest-dom"],
+      "jsx": "react-jsx",
+      "lib": ["ES2020", "DOM"]
+  },
+   "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "**/__tests__"]
+}
